@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "surecart-docs": {
+      "type": "http",
+      "url": "https://surecart.mintlify.app/mcp"
+    }
+  }
+}

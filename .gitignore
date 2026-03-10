@@ -1,0 +1,9 @@
+# Auto-cloned repositories (created by setup script)
+.repos/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
