@@ -10,7 +10,7 @@ AI-powered assistant for answering customer questions about SureCart.
 1. Open Terminal (Spotlight → type "Terminal" → press Enter)
 2. Paste: `git clone https://github.com/surecart/surecart-support.git ~/surecart-support`
 3. Run: `cd ~/surecart-support && chmod +x setup-mac.sh && ./setup-mac.sh`
-4. Follow the prompts → close Terminal → open new Terminal → type: `sc-support`
+4. Follow the prompts → close Terminal → open new Terminal → type: `claude` → type: `sc-support`
 
 ### Windows
 1. Open PowerShell (Start → type "PowerShell")
