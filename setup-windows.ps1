@@ -140,7 +140,7 @@ if ($LASTEXITCODE -ne 0) {
 
 New-Item -ItemType Directory -Force -Path $ReposDir | Out-Null
 
-$repos = @("surecart-wp", "surecart", "surecart-docs", "surecart-support.wiki")
+$repos = @("surecart-wp", "surecart", "surecart-docs", "surecart-support.wiki", "wordpress-sdk")
 foreach ($repo in $repos) {
     $repoDir = Join-Path $ReposDir $repo
     if (!(Test-Path $repoDir)) {
@@ -172,13 +172,13 @@ $batchContent = @"
 echo Updating SureCart Support...
 cd /d "$ScriptDir"
 git pull --ff-only 2>nul
-for %%r in (surecart-wp surecart surecart-docs surecart-support.wiki) do (
+for %%r in (surecart-wp surecart surecart-docs surecart-support.wiki wordpress-sdk) do (
     cd /d "$ReposDir\%%r" 2>nul && git pull --ff-only 2>nul
 )
 cd /d "$ScriptDir"
 echo Ready!
 echo.
-claude --add-dir "$ReposDir\surecart-wp" --add-dir "$ReposDir\surecart" --add-dir "$ReposDir\surecart-docs" --add-dir "$ReposDir\surecart-support.wiki"
+claude --add-dir "$ReposDir\surecart-wp" --add-dir "$ReposDir\surecart" --add-dir "$ReposDir\surecart-docs" --add-dir "$ReposDir\surecart-support.wiki" --add-dir "$ReposDir\wordpress-sdk"
 "@
 $batchPath = Join-Path $ScriptDir "launch-windows.bat"
 Set-Content -Path $batchPath -Value $batchContent

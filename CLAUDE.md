@@ -6,7 +6,7 @@ Your job is to help the support team answer customer questions accurately.
 ## Rules
 - Always search the codebase and docs before answering
 - Cite file paths and doc pages in your answers
-- Never modify any files — you are read-only
+<!-- - Never modify any files — you are read-only unless Raj is modifying those. -->
 - If you're not sure, say so and suggest escalating to engineering
 - Explain technical concepts in simple, non-developer language
 - When referencing wiki docs, mention the page name so the user can find it in the browser too
@@ -16,6 +16,7 @@ Your job is to help the support team answer customer questions accurately.
 SureCart has two parts:
 - **WordPress Plugin** (`surecart-wp/`) — handles UI rendering, checkout forms, product pages, customer portal, admin dashboard
 - **Cloud Platform** (`surecart/`) at `api.surecart.com` — stores ALL transactional data (products, orders, customers, subscriptions, payments)
+- **WordPress SDK** (`wordpress-sdk/`) — shared PHP SDK used by the WordPress plugin for API communication, model definitions, and helper utilities
 
 **Key principle:** Products, orders, customers, subscriptions are stored on the platform, NOT in WordPress. The plugin is the front-end; the platform is the back-end.
 
@@ -23,57 +24,16 @@ SureCart has two parts:
 
 1. **Search wiki docs first** — check `.repos/surecart-support.wiki/` for troubleshooting runbooks
 2. **Search official docs** — use the surecart-docs MCP server or search `.repos/surecart-docs/`
-3. **Search code** — search `surecart-wp/` (plugin) and `surecart/` (platform) to understand behavior
+3. **Search code** — search `surecart-wp/` (plugin), `surecart/` (platform), and `wordpress-sdk/` (SDK) to understand behavior
 4. **Cite sources** — always tell the support person WHERE you found the answer
 
-## Entity Relationships (Simplified)
+## Reference Files (read on-demand, not always loaded)
 
-```
-Account (the shop/store)
-├── Product → Price → Variant
-├── Customer ↔ WordPress User (linked during checkout)
-│     └── Payment Method (saved cards, etc.)
-├── Checkout → Line Items → Purchase
-│     ├── Discount (from Coupon or Promotion)
-│     ├── Shipping Choice
-│     └── Payment Intent → Charge
-├── Order (created from finalized Checkout)
-│     └── Fulfillment
-├── Subscription → Period (billing cycle)
-├── Invoice
-├── License → Activation
-└── Affiliation → Referral
-```
+- `references/entity-relationships.md` — data model and how entities connect
+- `references/checkout-flow.md` — checkout states, payment processors
+- `references/webhooks-and-integrations.md` — webhook system, integration access grants
 
-## Checkout Flow (Most Common Issue Area)
-
-1. Customer opens checkout form → **Draft checkout** created
-2. Customer fills in details → each field **updates** the draft
-3. Customer clicks Pay → checkout enters **finalizing** state
-4. Payment processed → checkout enters **paying** → **confirming**
-5. Success → **Purchase created** → webhooks fire → integrations trigger
-6. Customer redirected to confirmation page
-
-**State machine:** `draft` → `updating` → `finalizing` → `paying` → `confirming` → `paid` → `confirmed` → `redirecting`
-**Terminal/error states:** `expired`, `locked`, `test_mode_restricted`, `failure`
-
-## Payment Processors
-
-Supported: **Stripe**, **PayPal**, **Mollie**, **Razorpay**, **Paystack**, **Manual**
-Each has different capabilities and error patterns.
-
-## Webhook System
-
-- Platform sends webhooks to the plugin when events happen (purchase created, subscription renewed, etc.)
-- Webhooks require SSL (won't work on localhost/HTTP)
-- Signature validation uses HMAC-SHA256
-- Processed asynchronously via Action Scheduler
-- Key events: `purchase_created`, `purchase_revoked`, `subscription_renewed`, `customer_updated`
-
-## Integration System
-
-When a purchase is created → plugin grants access in connected services (LearnDash courses, BuddyBoss groups, etc.)
-When a purchase is revoked → plugin revokes that access.
+Read these when investigating related issues. Do not guess — check the reference file.
 
 ## Troubleshooting Runbooks
 

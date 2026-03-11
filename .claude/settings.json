@@ -1,19 +1,13 @@
 {
   "permissions": {
-    "allow": [
-      "Read",
-      "Grep",
-      "Glob",
-      "WebFetch(domain:surecart.com)",
-      "WebFetch(domain:developer.surecart.com)",
-      "WebFetch(domain:github.com)",
-      "mcp__surecart-docs"
-    ],
-    "deny": [
-      "Edit",
-      "Write",
-      "Bash",
-      "NotebookEdit"
-    ]
+     "allow": [
+        "Read",
+        "Grep",
+        "Glob",
+        "WebFetch(domain:surecart.com)",
+        "WebFetch(domain:developer.surecart.com)",
+        "WebFetch(domain:github.com)",
+        "mcp__surecart-docs"
+      ]
   }
 }

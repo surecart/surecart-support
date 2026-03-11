@@ -160,6 +160,7 @@ clone_repo "surecart-wp"
 clone_repo "surecart"
 clone_repo "surecart-docs"
 clone_repo "surecart-support.wiki"
+clone_repo "wordpress-sdk"
 
 echo "Step 5/5: Repositories ✓"
 
