@@ -7,7 +7,7 @@ echo "Updating SureCart Support..."
 (cd "$SCRIPT_DIR" && git pull --ff-only 2>/dev/null)
 
 # Update all code repos in parallel
-for repo in surecart-wp surecart surecart-docs surecart-support.wiki; do
+for repo in surecart-wp surecart surecart-docs surecart-support.wiki wordpress-sdk; do
     (cd "$REPOS_DIR/$repo" && git pull --ff-only 2>/dev/null) &
 done
 wait
@@ -15,4 +15,4 @@ wait
 echo "Ready!"
 echo ""
 cd "$SCRIPT_DIR"
-claude --add-dir "$REPOS_DIR/surecart-wp" --add-dir "$REPOS_DIR/surecart" --add-dir "$REPOS_DIR/surecart-docs" --add-dir "$REPOS_DIR/surecart-support.wiki"
+claude --add-dir "$REPOS_DIR/surecart-wp" --add-dir "$REPOS_DIR/surecart" --add-dir "$REPOS_DIR/surecart-docs" --add-dir "$REPOS_DIR/surecart-support.wiki" --add-dir "$REPOS_DIR/wordpress-sdk"
